@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    {% if find_id %}
+    <title>ID찾기</title>
+    {% else %}
+    <title>PW찾기</title>
+    {% endif %}
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}">
+</head>
+
+<body>
+    <div class="text-center my-3">
+        <h1 class="display-4">
+            <a href="{{ url_for('web_index.index') }}" class="text-decoration-none text-black">게시판</a>
+        </h1>
+    </div>
+    <br>
+    <div class="container" style="width: 500px;">
+        {% if find_id %}
+            {% if userid %}
+            <div class="text-center border border-dark">
+                <h1>찾으시는 ID</h1>
+                <h2 class="text-primary">{{ userid }}</h2>
+                <button type="button" onclick="location.href='{{ url_for('web_index.index') }}'">메인으로</button>
+            </div>
+            {% else %}
+            <form method="post">
+                <h3 class="text-center">ID찾기</h3>
+                <div>
+                    <label>이름</label>
+                    <input name="username" type="text" class="form-control" placeholder="이름">
+                </div>
+                <div>
+                    <label>전화번호</label>
+                    <input name="userphone" type="text" class="form-control" placeholder="전화번호">
+                </div>
+                <br>
+                <div class="text-end">
+                    <input type="submit" value="확인" class="btn btn-outline-primary">
+                    <button type="button" class="btn btn-outline-primary" onclick="location.href='{{ url_for('web_index.index') }}'">메인으로</button>
+                </div>
+            </form>
+            {% endif %}
+        {% elif find_pw %}
+            {% if userpw %}
+            <div class="text-center border border-dark">
+                <h1>찾으시는 PW</h1>
+                <h2 class="text-primary">{{ userpw }}</h2>
+                <button type="button" onclick="location.href='{{ url_for('web_index.index') }}'">메인으로</button>
+            </div>
+            {% else %}
+            <form method="post">
+                <h3 class="text-center">PW찾기</h3>
+                <div>
+                    <label>ID</label>
+                    <input name="userid" type="text" class="form-control" placeholder="ID">
+                </div>
+                <div>
+                    <label>이름</label>
+                    <input name="username" type="text" class="form-control" placeholder="이름">
+                </div>
+                <div>
+                    <label>전화번호</label>
+                    <input name="userphone" type="text" class="form-control" placeholder="전화번호">
+                </div>
+                <br>
+                <div class="text-end">
+                    <input type="submit" value="확인" class="btn btn-outline-primary">
+                    <button type="button" class="btn btn-outline-primary" onclick="location.href='{{ url_for('web_index.index') }}'">메인으로</button>
+                </div>
+            </form>
+            {% endif %}
+        {% endif %}
+    </div>
+
+</body>
+
+</html>

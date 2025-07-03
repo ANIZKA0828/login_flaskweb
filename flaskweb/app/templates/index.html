@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>게시판</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}">
+</head>
+
+<body>
+    <div class="text-center my-3">
+        <h1 class="display-4">
+            <a href="{{ url_for('web_index.index') }}" class="text-decoration-none text-black">게시판</a>
+        </h1>
+    </div>
+    <div class="container p-5" style="width: 1000px;">
+        <div class="text-end">
+            {% if user_id %}
+            <button type="button" onclick="location.href='{{ url_for('web_create.create',userid=user_id) }}'"
+                class="btn btn-primary">글쓰기</button>
+            {% endif %}
+        </div>
+        <br>
+        <div style="display: flex;">
+            <table class="table border border-black" style="width: 800px;">
+                <thead>
+                    <tr class="table-primary">
+                        <th width="10%" scope="col" class="text-center text-dark border border-dark">번호</th>
+                        <th width="55%" scope="col" class="text-center text-dark border border-dark">제목</th>
+                        <th width="15%" scope="col" class="text-center text-dark border border-dark">작성자</th>
+                        <th width="20%" scope="col" class="text-center text-dark border border-dark">작성일</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if posts %}
+                    {% for post in posts %}
+                    <tr>
+                        <td class="text-center">{{ loop.index }}</td>
+                        {% if post.password %}
+                        <td>
+                            <div>
+                                <a href="#"
+                                    onclick="document.getElementById('pwBox_{{ post.id }}').style.display = this.href ? 'block' : 'none' "
+                                    id="pwpost" class='text-decoration-none text-black'>{{ post.title }}</a>
+                                <div id="pwBox_{{ post.id }}" style="display: none;">
+                                    <form method="post" action="{{ url_for('web_detail.view',post_id=post.id) }}">
+                                        <input name="password" type="password" placeholder="비밀번호">
+                                    </form>
+                                </div>
+                            </div>
+
+                        </td>
+                        {% else %}
+                        <td>
+                            <a href="{{ url_for('web_detail.view', post_id=post.id) }}"
+                                class='text-decoration-none text-black'>{{ post.title }}</a>
+                        </td>
+                        {% endif %}
+                        <td class="text-center">{{ post.writer }}</td>
+                        <td class="text-center">{{ post.created_at }}</td>
+                    </tr>
+                    {% endfor %}
+                    {% else %}
+                    <tr>
+                        <td colspan="4" class="text-center">게시물이 없습니다.</td>
+                    </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+
+            <div class="border border-black" style="width: 200px; margin-left: 20px; margin-bottom: auto;">
+                {% if user_id %}
+                <div class="text-center">
+                    <p><a href="{{ url_for('web_profile.profile',user_id=user_id) }}">{{ username }}</a>님 환영합니다.</p>
+                </div>
+                <div class="text-center border-bottom border-black">
+                    <button type="button" class="btn btn-outline-secondary"
+                        onclick="location.href='{{ url_for('web_index.logout') }}'"
+                        style="font-size: 20px; margin-bottom: 10px;">로그아웃</button>
+                </div>
+                {% else %}
+                <form method="post" action="{{ url_for('web_index.login') }}">
+                    <div>
+                        <input name="userid" type="text" class="form-control text-center" placeholder="아이디">
+                    </div>
+                    <div>
+                        <input name="userpw" type="password" class="form-control text-center"
+                            placeholder="비밀번호"></input>
+                    </div>
+                    <div class="text-center border-bottom border-black">
+                        <button type="submit" class="btn btn-outline-secondary"
+                            style="font-size: 20px; margin-bottom: 10px;">로그인</button>
+                    </div>
+                    <div class="text-center">
+                        <a href="{{ url_for('web_register.register') }}" class="text-decoration-none text-black"
+                            style="font-size: 12px;">회원가입</a>
+                        <a href="{{ url_for('web_find.find',type='find_id') }}" class="text-decoration-none text-black"
+                            style="font-size: 12px;">ID찾기</a>
+                        <a href="{{ url_for('web_find.find',type='find_pw') }}" class="text-decoration-none text-black"
+                            style="font-size: 12px;">PW찾기</a>
+                    </div>
+                </form>
+                {% endif %}
+                <br>
+                <form method="post" action="{{ url_for('web_profile.userprofile') }}">
+                    <p class="text-center mb-auto">프로필 검색</p>
+                    <div class="input-group ">
+                        <input type="text" class="form-control" placeholder="ID나 전화번호 입력" name="search_user">
+                        <button class="btn btn-outline-secondary" type="submit">검색</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+
+        <br>
+        <form method="post" action="{{ url_for('web_index.index') }}">
+            <div class="input-group mb-3">
+                <select class="custom-select mr-sm-2" name="search_type">
+                    <option value="all" selected>제목+내용+작성자</option>
+                    <option value="title">제목</option>
+                    <option value="content">내용</option>
+                    <option value="writer">작성자</option>
+                </select>
+                <input type="text" class="form-control" placeholder="입력" name="search_name">
+                <button class="btn btn-outline-secondary" type="submit">검색</button>
+            </div>
+        </form>
+    </div>
+
+</body>
+
+</html>

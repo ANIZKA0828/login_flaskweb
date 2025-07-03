@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>회원가입</title>
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}">
+</head>
+<body>
+    <div class="text-center my-3">
+        <h1 class="display-4">
+            <a href="{{ url_for('web_index.index') }}" class="text-decoration-none text-black">게시판</a>
+        </h1>
+    </div>
+    <div class="container" style="width: 800px;">
+    <form method="post">
+        <div>
+        <lable>아이디</lable> 
+        <input name="userid" type="text" class="form-control"  placeholder="아이디"></input>
+        </div>
+        <div>
+        <label>비밀번호</label>
+        <input name="userpw" type="password" class="form-control" placeholder="비밀번호"></input>
+        </div>
+        <div>
+        <label>이름</label>
+        <input name="username" type="text" class="form-control" placeholder="이름"></input>
+        </div>
+        <div>
+        <label>학교</label>
+        <input name="userschool" type="text" class="form-control" placeholder="학교"></input>
+        </div>
+        <div>
+        <label>전화번호</label>
+        <input name="userphone" type="text" class="form-control" placeholder="010xxxxxxx"></input>
+        </div>
+        <br>
+        <div class="text-end">
+            <input type="submit" value="회원가입" class="btn btn-outline-primary">
+            <button type="button" class="btn btn-outline-primary" onclick="location.href='{{ url_for('web_index.index') }}'">메인으로</button>
+        </div>
+    </form> 
+    </div>
+    
+</body>
+</html>

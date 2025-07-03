@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>{{ user.username }}의 프로필</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}">
+</head>
+
+<body>
+    <div class="text-center my-3">
+        <h1 class="display-4">
+            <a href="{{ url_for('web_index.index') }}" class="text-decoration-none text-black">게시판</a>
+        </h1>
+    </div>
+    <br>
+    <h4 class="text-center">{{ user.username }}님의 프로필</h4>
+    <br>
+    <div class="container border border-black" style="width: 500px;">
+        {% if modify %}
+        <form method="post" style="display: flexbox;" enctype="multipart/form-data">
+            <div>
+                {% if user.userimage %}
+                <img src="{{ url_for('static', filename='image/'+ user.userimgname)}}" width="150" height="200">
+                {% else %}
+                <img src="{{ url_for('static', filename='image/myprofile.jpg')}}" alt="No image" width="150"
+                    height="200">
+                {% endif %}
+                <input name="userimage" type="file" accept=".jpg, .jpeg, .png">
+            </div>
+
+            <div>
+                <div>
+                    <label>아이디</label>
+                    <input type="text" name="userid" class="form-control" value="{{ user.userid }}">
+                </div>
+                <div>
+                    <label>비밀번호</label>
+                    <input type="password" name="userpw" class="form-control" value="{{ user.userpw }}">
+                </div>
+                <div>
+                    <label>이름</label>
+                    <input type="text" name="username" class="form-control" value="{{ user.username }}">
+                </div>
+                <div>
+                    <label>학교</label>
+                    <input type="text" name="userschool" class="form-control" value="{{ user.userschool }}">
+                </div>
+                <div>
+                    <label>전화번호</label>
+                    <input type="text" name="userphone" class="form-control" value="{{ user.userphone }}">
+                </div>
+                <br>
+                <div class="text-end">
+                    <input type="submit" value="저장">
+                    <button type="button" onclick="location.href='javascript:history.back();'">취소</button>
+                </div>
+            </div>
+        </form>
+        <br>
+
+        {% else %}
+        <div style="display: flexbox;">
+            <div>
+                {% if user.userimage %}
+                <img src="{{ url_for('static', filename='image/'+ user.userimgname)}}" width="150" height="200">
+                {% else %}
+                <img src="{{ url_for('static', filename='image/myprofile.jpg')}}" alt="No image" width="150"
+                    height="200">
+                {% endif %}
+            </div>
+            <div>
+                {% if session.user_id %}
+                <div>
+                    <label>아이디</label>
+                    <p class="form-control">{{ user.userid }}</p>
+                </div>
+                {% endif %}
+                <div>
+                    <label>이름</label>
+                    <p class="form-control">{{ user.username }}</p>
+                </div>
+                <div>
+                    <label>학교</label>
+                    <p class="form-control">{{ user.userschool }}</p>
+                </div>
+                {% if session.user_id %}
+                <div>
+                    <label>전화번호</label>
+                    <p class="form-control">{{ user.userphone }}</p>
+                </div>
+                <div class="text-end">
+                    <button type="button"
+                        onclick="location.href='{{ url_for('web_profile.profile_modify',user_index=user.id) }}'">수정</button>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        {% endif %}
+    </div>
+
+
+</body>
+
+</html>

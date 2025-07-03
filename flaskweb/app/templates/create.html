@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>글쓰기</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}">
+</head>
+
+<body>
+    <div class="text-center my-3">
+        <h1 class="display-4">
+            <a href="{{ url_for('web_index.index') }}" class="text-decoration-none text-black">게시판</a>
+        </h1>
+    </div>
+    <div class="container" style="width: 800px;">
+        <form method="post" enctype="multipart/form-data">
+            <div>
+                <lable>제목</lable>
+                <input name="title" type="text" class="form-control" placeholder="제목">
+            </div>
+            <div>
+                <label>내용</label>
+                <textarea name="content" class="form-control" rows="10" placeholder="내용"></textarea>
+            </div>
+            <div>
+                <p>
+                    <input name="writer" type="hidden" value="{{ user.username }}">
+                </p>
+            </div>
+            <div>
+                <input name="file" type="file">
+            </div>
+            <div>
+                <input type="checkbox" id="pwCheck"
+                    onclick="document.getElementById('pwBox').style.display = this.checked ? 'block' : 'none';">
+                비밀 글 설정
+                <div id="pwBox" style="display:none;">
+                    <input name="password" type="password" placeholder="비밀번호">
+                </div>
+            </div>
+            <br>
+            <div class="text-end">
+                <input type="submit" class="btn btn-outline-primary" value="등록">
+                <button type="button" class="btn btn-outline-primary" onclick="location.href='{{ url_for('web_index.index') }}'">취소</button>
+            </div>
+        </form>
+    </div>
+
+</body>
+
+</html>

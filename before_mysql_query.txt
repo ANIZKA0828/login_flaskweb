@@ -1,0 +1,28 @@
+CREATE DATABASE myboard_db;
+#myboard_db 데이터베이스 생성
+
+USE myboard_db;
+
+CREATE TABLE posts (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(50) NOT NULL,
+    content TEXT NOT NULL,
+    writer VARCHAR(50) NOT NULL,
+    password VARCHAR(50) NOT NULL,
+    file_name VARCHAR(50),
+    file_media LONGBLOB,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+# posts 테이블 생성
+
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    userid varchar(30) NOT NULL,
+    userpw varchar(30) NOT NULL,
+    username varchar(30) NOT NULL,
+    userschool varchar(30),
+    userphone varchar(30) NOT NULL,
+    userimgname varchar(255),
+    userimage LONGBLOB
+)
+# users 테이블 생성

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>글수정</title>
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}">
+</head>
+<body>
+    <div class="text-center my-3">
+        <h1 class="display-4">
+            <a href="{{ url_for('web_index.index') }}" class="text-decoration-none text-black">게시판</a>
+        </h1>
+    </div>
+    <div class="container" style="width: 1000px;">
+    <form method="post">
+        <div>
+        <lable>제목</lable> 
+        <textarea name="title" class="form-control">{{ post.title }}</textarea>
+        </div>
+        <div>
+        <label>내용</label>
+        <textarea name="content" class="form-control" rows="10">{{ post.content }}</textarea>
+        </div>
+        <div>
+        <label>작성자</label>
+        <p class="fw-bold form-control border border-0">{{ post.writer }}</p>
+        </div>
+        <div>
+        <label>비밀번호</label>
+        <input type="password" name="password" class="form-control"></input>
+        </div>
+        <br>
+        <div class="text-end">
+            <input type="submit" class="btn btn-outline-primary" value="저장">
+            <button type="button" class="btn btn-outline-primary" onclick="location.href='javascript:history.back();'">취소</button>
+        </div>
+    </form>
+    </div>
+</body>
+</html>
