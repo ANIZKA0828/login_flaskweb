@@ -45,7 +45,6 @@ def login():
                 sql = "SELECT * FROM users WHERE userid=%s"
                 cursor.execute(sql,(user_id))
                 user = cursor.fetchone()
-                session.clear()
                 session['user_id'] = user_id
                 session['username'] = user['username']
                 return redirect(url_for('web_index.index'))

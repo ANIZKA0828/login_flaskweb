@@ -1,5 +1,5 @@
 import os
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, render_template, request, redirect, url_for, session
 from ..db import get_db_connection
 
 bp = Blueprint('web_profile', __name__, url_prefix='/profile')
@@ -39,7 +39,7 @@ def profile_modify(user_index):
         userphone = request.form['userphone']
         userschool = request.form['userschool']
         userimage = request.files['userimage']
-        if userid and userpw and username:
+        if userid and userpw and username and userphone:
             conn = get_db_connection()
             with conn.cursor() as cursor:
                 if userimage:
@@ -57,13 +57,19 @@ def profile_modify(user_index):
 
                     sql = "UPDATE users SET userid = %s, userpw = %s, username = %s, userschool = %s, userphone = %s, userimgname = %s, userimage = %s  WHERE id = %s"
                     cursor.execute(sql,(userid,userpw,username,userschool,userphone,userimgname, file_path, user_index))
-                    conn.commit()
+                    
                 else:
                     sql = "UPDATE users SET userid = %s, userpw = %s, username = %s, userschool = %s, userphone = %s WHERE id = %s"
                     cursor.execute(sql,(userid,userpw,username,userschool, userphone, user_index))
-                    conn.commit()
+                
+                conn.commit()
 
-                conn.close()
+                sql = "SELECT * FROM users WHERE id = %s"
+                cursor.execute(sql,(user_index))
+                user = cursor.fetchone()
+                
+                session['user_id'] = user['userid']
+                session['username'] = user['username']
                 return redirect(url_for('web_index.index'))          
     
         else:
@@ -72,7 +78,8 @@ def profile_modify(user_index):
     if request.method == 'GET':
         conn = get_db_connection()
         with conn.cursor() as cursor:
-            cursor.execute(f"SELECT * FROM users WHERE id = {user_index}")
+            sql = "SELECT * FROM users WHERE id = %s"
+            cursor.execute(sql,(user_index))
             user = cursor.fetchone()
         conn.close()
         return render_template('profile.html',modify=True, user=user)

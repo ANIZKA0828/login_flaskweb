@@ -1,9 +1,12 @@
 from .views import index_view
 from flask import Flask
+import os
+from dotenv import load_dotenv
+load_dotenv()
 
 def create_app():
     app = Flask(__name__)
-    app.secret_key = 'sdfasfdew23e2sd4523e'
+    app.secret_key = os.environ.get('SECRET_KEY')
 
     from .views import create_view, detail_view, modify_view, delete_view, register_view, find_view, profile_view
     app.register_blueprint(index_view.bp)

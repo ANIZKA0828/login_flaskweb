@@ -1,4 +1,3 @@
-import os
 from flask import Blueprint, render_template, request, url_for, redirect
 from ..db import get_db_connection
 

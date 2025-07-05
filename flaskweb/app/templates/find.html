@@ -24,7 +24,8 @@
             <div class="text-center border border-dark">
                 <h1>찾으시는 ID</h1>
                 <h2 class="text-primary">{{ userid }}</h2>
-                <button type="button" onclick="location.href='{{ url_for('web_index.index') }}'">메인으로</button>
+                <br>
+                <button type="button" class="btn btn-outline-primary mb-3" onclick="location.href='{{ url_for('web_index.index') }}'">메인으로</button>
             </div>
             {% else %}
             <form method="post">
@@ -49,7 +50,8 @@
             <div class="text-center border border-dark">
                 <h1>찾으시는 PW</h1>
                 <h2 class="text-primary">{{ userpw }}</h2>
-                <button type="button" onclick="location.href='{{ url_for('web_index.index') }}'">메인으로</button>
+                <br>
+                <button type="button" class="btn btn-outline-primary mb-3" onclick="location.href='{{ url_for('web_index.index') }}'">메인으로</button>
             </div>
             {% else %}
             <form method="post">
